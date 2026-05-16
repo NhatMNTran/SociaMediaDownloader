@@ -143,7 +143,7 @@ namespace SocialMediaDownloader.ViewModels
             await downloadService.Download(
                 Url,
                 DestinationPath,
-                SelectedFormat.FormatId);
+                SelectedFormat);
 
             Progress = 100;
 

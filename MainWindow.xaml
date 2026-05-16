@@ -62,7 +62,7 @@
 
             <ComboBox ItemsSource="{Binding Formats}"
                       SelectedItem="{Binding SelectedFormat}"
-                      DisplayMemberPath="DisplayText"
+                      DisplayMemberPath="Label"
                       Height="35"/>
 
         </StackPanel>

@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json.Linq;
 using SocialMediaDownloader.Models;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SocialMediaDownloader.Services
@@ -10,14 +12,17 @@ namespace SocialMediaDownloader.Services
     public class YtDlpService
     {
         private readonly string ytDlpPath =
-            Path.Combine("Assets", "yt-dlp.exe");
+            Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                "Assets",
+                "yt-dlp.exe");
 
         public async Task<MediaInfo> GetMediaInfo(string url)
         {
             ProcessStartInfo psi = new()
             {
                 FileName = ytDlpPath,
-                Arguments = $"-J {url}",
+                Arguments = $"-J \"{url}\"",
                 RedirectStandardOutput = true,
                 UseShellExecute = false,
                 CreateNoWindow = true
@@ -34,22 +39,39 @@ namespace SocialMediaDownloader.Services
 
             List<DownloadOption> formats = new();
 
-            foreach (var format in obj["formats"])
-            {
-                string ext = format["ext"]?.ToString();
+            var allFormats = obj["formats"];
 
-                if (ext == null)
-                    continue;
+            var videoFormats = allFormats
+                .Where(f =>
+                    f["vcodec"]?.ToString() != "none" &&
+                    f["height"] != null)
+                .GroupBy(f => f["height"]?.ToString())
+                .Select(g => g.First())
+                .OrderByDescending(f => (int?)f["height"]);
+
+            foreach (var format in videoFormats)
+            {
+                string height =
+                    format["height"]?.ToString();
+
+                string formatId =
+                    format["format_id"]?.ToString();
 
                 formats.Add(new DownloadOption
                 {
-                    FormatId = format["format_id"]?.ToString(),
-                    Extension = ext,
-                    Resolution = format["resolution"]?.ToString(),
-                    AudioOnly =
-                        format["vcodec"]?.ToString() == "none"
+                    Label = $"MP4 {height}p",
+                    FormatString =
+                        $"{formatId}+bestaudio",
+                    IsAudio = false
                 });
             }
+
+            formats.Add(new DownloadOption
+            {
+                Label = "MP3 Audio",
+                FormatString = "bestaudio",
+                IsAudio = true
+            });
 
             return new MediaInfo
             {

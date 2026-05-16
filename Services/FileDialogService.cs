@@ -1,6 +1,4 @@
-﻿using System.Windows.Forms;
-
-namespace SocialMediaDownloader.Services
+﻿namespace SocialMediaDownloader.Services
 {
     public class FileDialogService
     {
