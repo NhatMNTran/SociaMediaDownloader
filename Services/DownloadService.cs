@@ -38,7 +38,8 @@ namespace SocialMediaDownloader.Services
             }
             else
             {
-                /*arguments =
+                //YOUTUBE
+                arguments =
                     $"-f \"bv*+ba/b\" " +
                     $"--merge-output-format mp4 " +
                     $"--ffmpeg-location \"{ffmpegPath}\" " +
@@ -47,8 +48,10 @@ namespace SocialMediaDownloader.Services
                     $"--windows-filenames " +
                     $"--postprocessor-args \"ffmpeg:-c:v copy -c:a aac\" " +
                     $"-o \"{destination}\\%(title)s_[%(height)sp].%(ext)s\" " +
-                    $"\"{url}\"";*/
-                string outputTemplate =
+                    $"\"{url}\"";
+
+                //TWITTER
+                /*string outputTemplate =
                     Path.Combine(destination, "%(title)s_[%(height)sp].%(ext)s");
                 arguments =
                     $"-f \"{option.FormatString}\" " +
@@ -58,7 +61,7 @@ namespace SocialMediaDownloader.Services
                     $"--windows-filenames " +
                     $"--postprocessor-args \"ffmpeg:-c:v copy -c:a aac\" " +
                     $"-o \"{outputTemplate}\" " +
-                    $"\"{url}\"";
+                    $"\"{url}\"";*/
             }
 
             Debug.WriteLine("YT-DLP: " + ytDlpPath);
