@@ -1,12 +1,112 @@
-﻿<Window x:Class="SociaMediaDownloader.MainWindow"
+﻿<Window x:Class="SocialMediaDownloader.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SociaMediaDownloader"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Social Media Downloader"
+        Height="600"
+        Width="800"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="20">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- URL -->
+        <StackPanel Grid.Row="0">
+
+            <TextBlock Text="Social Media URL"
+                       FontWeight="Bold"
+                       Margin="0,0,0,5"/>
+
+            <DockPanel>
+
+                <TextBox Height="35"
+                         Text="{Binding Url}"
+                         FontSize="14"
+                         VerticalContentAlignment="Center"/>
+
+                <Button Content="Check"
+                        Width="100"
+                        Margin="10,0,0,0"
+                        Command="{Binding CheckCommand}"/>
+
+            </DockPanel>
+
+        </StackPanel>
+
+        <!-- Media Info -->
+        <StackPanel Grid.Row="1"
+                    Margin="0,20,0,0">
+
+            <TextBlock Text="{Binding Title}"
+                       FontSize="18"
+                       FontWeight="Bold"/>
+
+            <TextBlock Text="{Binding Platform}"
+                       Margin="0,5,0,0"/>
+
+        </StackPanel>
+
+        <!-- Formats -->
+        <StackPanel Grid.Row="2"
+                    Margin="0,20,0,0">
+
+            <TextBlock Text="Available Formats"
+                       FontWeight="Bold"
+                       Margin="0,0,0,5"/>
+
+            <ComboBox ItemsSource="{Binding Formats}"
+                      SelectedItem="{Binding SelectedFormat}"
+                      DisplayMemberPath="DisplayText"
+                      Height="35"/>
+
+        </StackPanel>
+
+        <!-- Destination -->
+        <StackPanel Grid.Row="3"
+                    Margin="0,20,0,0">
+
+            <TextBlock Text="Download Destination"
+                       FontWeight="Bold"
+                       Margin="0,0,0,5"/>
+
+            <DockPanel>
+
+                <TextBox Text="{Binding DestinationPath}"
+                         Height="35"/>
+
+                <Button Content="Browse"
+                        Width="100"
+                        Margin="10,0,0,0"
+                        Command="{Binding BrowseCommand}"/>
+
+            </DockPanel>
+
+        </StackPanel>
+
+        <!-- Download -->
+        <StackPanel Grid.Row="4"
+                    Margin="0,20,0,0">
+
+            <ProgressBar Height="25"
+                         Minimum="0"
+                         Maximum="100"
+                         Value="{Binding Progress}"/>
+
+            <TextBlock Text="{Binding Status}"
+                       Margin="0,5,0,0"/>
+
+            <Button Content="Download"
+                    Height="40"
+                    Margin="0,15,0,0"
+                    Command="{Binding DownloadCommand}"/>
+
+        </StackPanel>
 
     </Grid>
 </Window>
