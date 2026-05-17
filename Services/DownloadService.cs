@@ -25,7 +25,10 @@ namespace SocialMediaDownloader.Services
             DownloadOption option)
         {
             string arguments;
-
+            string outputTemplate =
+                Path.Combine(
+                    destination,
+                    "%(title)s_[%(height)sp].%(ext)s");
 
             if (option.IsAudio)
             {
@@ -36,9 +39,10 @@ namespace SocialMediaDownloader.Services
                     $"-o \"{destination}\\%(title)s.%(ext)s\" " +
                     $"\"{url}\"";
             }
-            else
+            else if (url.Contains("youtube.com") ||
+                    url.Contains("youtu.be"))
             {
-                //YOUTUBE
+                // YOUTUBE
                 arguments =
                     $"-f \"bv*+ba/b\" " +
                     $"--merge-output-format mp4 " +
@@ -47,8 +51,58 @@ namespace SocialMediaDownloader.Services
                     $"--force-overwrites " +
                     $"--windows-filenames " +
                     $"--postprocessor-args \"ffmpeg:-c:v copy -c:a aac\" " +
-                    $"-o \"{destination}\\%(title)s_[%(height)sp].%(ext)s\" " +
+                    $"-o \"{outputTemplate}\" " +
                     $"\"{url}\"";
+            }
+            else if (url.Contains("twitter.com") ||
+                     url.Contains("x.com"))
+            {
+                // TWITTER / X
+                /*arguments =
+                    $"-f \"{option.FormatString}\" " +
+                    $"--merge-output-format mp4 " +
+                    $"--ffmpeg-location \"{ffmpegPath}\" " +
+                    $"--force-overwrites " +
+                    $"--windows-filenames " +
+                    $"--postprocessor-args \"ffmpeg:-c:v copy -c:a aac\" " +
+                    $"-o \"{outputTemplate}\" " +
+                    $"\"{url}\"";*/
+
+                // TWITTER / X
+                arguments =
+                    $"-f \"b\" " +
+                    $"--merge-output-format mp4 " +
+                    $"--ffmpeg-location \"{ffmpegPath}\" " +
+                    $"--force-overwrites " +
+                    $"--windows-filenames " +
+                    $"--postprocessor-args \"ffmpeg:-c:v copy -c:a aac\" " +
+                    $"-o \"{outputTemplate}\" " +
+                    $"\"{url}\"";
+            }
+            else
+            {
+                // DEFAULT (Instagram / TikTok / Others)
+                arguments =
+                    $"-f \"bestvideo+bestaudio/best\" " +
+                    $"--merge-output-format mp4 " +
+                    $"--ffmpeg-location \"{ffmpegPath}\" " +
+                    $"--force-overwrites " +
+                    $"--windows-filenames " +
+                    $"-o \"{outputTemplate}\" " +
+                    $"\"{url}\"";
+            }
+            {
+                //YOUTUBE
+                /*arguments =
+                    $"-f \"bv*+ba/b\" " +
+                    $"--merge-output-format mp4 " +
+                    $"--ffmpeg-location \"{ffmpegPath}\" " +
+                    $"--no-part " +
+                    $"--force-overwrites " +
+                    $"--windows-filenames " +
+                    $"--postprocessor-args \"ffmpeg:-c:v copy -c:a aac\" " +
+                    $"-o \"{destination}\\%(title)s_[%(height)sp].%(ext)s\" " +
+                    $"\"{url}\"";*/
 
                 //TWITTER
                 /*string outputTemplate =

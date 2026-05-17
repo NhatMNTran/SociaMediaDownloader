@@ -23,8 +23,19 @@ namespace SocialMediaDownloader.ViewModels
             get => url;
             set
             {
-                url = value;
-                OnPropertyChanged();
+                if (url != value)
+                {
+                    url = value;
+
+                    Progress = 0;
+                    Status = "Ready";
+
+                    Formats.Clear();
+
+                    SelectedFormat = null;
+
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -92,8 +103,15 @@ namespace SocialMediaDownloader.ViewModels
             get => selectedFormat;
             set
             {
-                selectedFormat = value;
-                OnPropertyChanged();
+                if (selectedFormat != value)
+                {
+                    selectedFormat = value;
+
+                    Progress = 0;
+                    Status = "Ready";
+
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -115,6 +133,7 @@ namespace SocialMediaDownloader.ViewModels
 
         private async Task CheckMedia()
         {
+            Progress = 0;
             Status = "Checking media...";
 
             MediaInfo info =

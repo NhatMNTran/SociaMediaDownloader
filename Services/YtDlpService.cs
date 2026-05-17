@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using static System.Windows.Forms.DataFormats;
 
 namespace SocialMediaDownloader.Services
 {
@@ -48,23 +49,39 @@ namespace SocialMediaDownloader.Services
                 .GroupBy(f => f["height"]?.ToString())
                 .Select(g => g.First())
                 .OrderByDescending(f => (int?)f["height"]);
-
-            foreach (var format in videoFormats)
+            if (url.Contains("twitter.com") ||
+                url.Contains("x.com"))
             {
-                string height =
-                    format["height"]?.ToString();
-
-                string formatId =
-                    format["format_id"]?.ToString();
-
                 formats.Add(new DownloadOption
                 {
-                    Label = $"MP4 {height}p",
-                    FormatString =
-                        $"{formatId}+bestaudio",
+                    Label = "MP4 Video",
+                    FormatString = "best",
                     IsAudio = false
                 });
             }
+            else
+            {
+                foreach (var format in videoFormats)
+                {
+                    string height =
+                        format["height"]?.ToString();
+
+                    string formatId =
+                        format["format_id"]?.ToString();
+
+                    if (string.IsNullOrWhiteSpace(formatId))
+                        continue;
+
+                    formats.Add(new DownloadOption
+                    {
+                        Label = $"MP4 {height}p",
+                        FormatString =
+                            $"{formatId}+bestaudio",
+                        IsAudio = false
+                    });
+                }
+            }
+            
 
             formats.Add(new DownloadOption
             {
