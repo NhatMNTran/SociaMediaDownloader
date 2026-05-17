@@ -44,9 +44,11 @@ namespace SocialMediaDownloader.Services
             {
                 // YOUTUBE
                 arguments =
-                    $"-f \"bv*+ba/b\" " +
+                    //$"-f \"bv*+ba/b\" " +
+                    $"-f \"{option.FormatString}\" " +
                     $"--merge-output-format mp4 " +
                     $"--ffmpeg-location \"{ffmpegPath}\" " +
+                    $"--js-runtimes node " +
                     $"--no-part " +
                     $"--force-overwrites " +
                     $"--windows-filenames " +
@@ -70,7 +72,8 @@ namespace SocialMediaDownloader.Services
 
                 // TWITTER / X
                 arguments =
-                    $"-f \"b\" " +
+                    //$"-f \"b\" " +
+                    $"-f \"{option.FormatString}\" " +
                     $"--merge-output-format mp4 " +
                     $"--ffmpeg-location \"{ffmpegPath}\" " +
                     $"--force-overwrites " +
@@ -83,7 +86,8 @@ namespace SocialMediaDownloader.Services
             {
                 // DEFAULT (Instagram / TikTok / Others)
                 arguments =
-                    $"-f \"bestvideo+bestaudio/best\" " +
+                    $"-f \"{option.FormatString}\" " +
+                    //$"-f \"bestvideo+bestaudio/best\" " +
                     $"--merge-output-format mp4 " +
                     $"--ffmpeg-location \"{ffmpegPath}\" " +
                     $"--force-overwrites " +
