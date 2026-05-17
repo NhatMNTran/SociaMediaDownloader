@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace SocialMediaDownloader.Services
@@ -22,13 +23,22 @@ namespace SocialMediaDownloader.Services
         public async Task Download(
             string url,
             string destination,
+            string fileName,
             DownloadOption option)
         {
             string arguments;
-            string outputTemplate =
+            /*string outputTemplate =
                 Path.Combine(
                     destination,
-                    "%(title)s_[%(height)sp].%(ext)s");
+                    "%(title)s_[%(height)sp].%(ext)s");*/
+
+            string safeName = fileName;
+
+            if (string.IsNullOrWhiteSpace(safeName))
+                safeName = "download";
+
+            string outputTemplate =
+                Path.Combine(destination, $"{safeName}_%(height)sp.%(ext)s");
 
             if (option.IsAudio)
             {

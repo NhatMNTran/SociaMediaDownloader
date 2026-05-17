@@ -46,6 +46,18 @@
                  Background="#F2F2F2"
                  Padding="10"/>
 
+                <TextBlock Text="File Name"
+                 FontWeight="SemiBold"
+                 Margin="0,10,0,5"
+                 Foreground="#444"/>
+
+                <TextBox Text="{Binding FileName}"
+                 Height="45"
+                 FontSize="14"
+                 Padding="10"
+                 Background="#F2F2F2"
+                 BorderThickness="0"/>
+
                 <Button Content="Check"
                 Height="38"
                 Margin="0,10,0,0"

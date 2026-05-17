@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.IO;
 
 namespace SocialMediaDownloader.ViewModels
 {
@@ -94,6 +95,28 @@ namespace SocialMediaDownloader.ViewModels
             }
         }
 
+        private string fileName;
+
+        public string FileName
+        {
+            get => fileName;
+            set
+            {
+                fileName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string SanitizeFileName(string name)
+        {
+            foreach (char c in Path.GetInvalidFileNameChars())
+            {
+                name = name.Replace(c, '_');
+            }
+
+            return name;
+        }
+
         public ObservableCollection<DownloadOption> Formats { get; set; }
             = new();
 
@@ -140,6 +163,7 @@ namespace SocialMediaDownloader.ViewModels
                 await ytDlpService.GetMediaInfo(Url);
 
             Title = info.Title;
+            FileName = SanitizeFileName(info.Title);
             Platform = info.Platform;
 
             Formats.Clear();
@@ -162,6 +186,7 @@ namespace SocialMediaDownloader.ViewModels
             await downloadService.Download(
                 Url,
                 DestinationPath,
+                FileName,
                 SelectedFormat);
 
             Progress = 100;
