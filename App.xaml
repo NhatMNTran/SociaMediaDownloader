@@ -4,6 +4,9 @@
              xmlns:local="clr-namespace:SociaMediaDownloader"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <DropShadowEffect x:Key="ShadowEffect"
+                  BlurRadius="10"
+                  ShadowDepth="2"
+                  Opacity="0.15"/>
     </Application.Resources>
 </Application>

@@ -60,20 +60,8 @@ namespace SocialMediaDownloader.Services
                      url.Contains("x.com"))
             {
                 // TWITTER / X
-                /*arguments =
-                    $"-f \"{option.FormatString}\" " +
-                    $"--merge-output-format mp4 " +
-                    $"--ffmpeg-location \"{ffmpegPath}\" " +
-                    $"--force-overwrites " +
-                    $"--windows-filenames " +
-                    $"--postprocessor-args \"ffmpeg:-c:v copy -c:a aac\" " +
-                    $"-o \"{outputTemplate}\" " +
-                    $"\"{url}\"";*/
-
-                // TWITTER / X
                 arguments =
-                    //$"-f \"b\" " +
-                    $"-f \"{option.FormatString}\" " +
+                    $"-f \"b\" " +
                     $"--merge-output-format mp4 " +
                     $"--ffmpeg-location \"{ffmpegPath}\" " +
                     $"--force-overwrites " +
@@ -95,36 +83,6 @@ namespace SocialMediaDownloader.Services
                     $"-o \"{outputTemplate}\" " +
                     $"\"{url}\"";
             }
-            {
-                //YOUTUBE
-                /*arguments =
-                    $"-f \"bv*+ba/b\" " +
-                    $"--merge-output-format mp4 " +
-                    $"--ffmpeg-location \"{ffmpegPath}\" " +
-                    $"--no-part " +
-                    $"--force-overwrites " +
-                    $"--windows-filenames " +
-                    $"--postprocessor-args \"ffmpeg:-c:v copy -c:a aac\" " +
-                    $"-o \"{destination}\\%(title)s_[%(height)sp].%(ext)s\" " +
-                    $"\"{url}\"";*/
-
-                //TWITTER
-                /*string outputTemplate =
-                    Path.Combine(destination, "%(title)s_[%(height)sp].%(ext)s");
-                arguments =
-                    $"-f \"{option.FormatString}\" " +
-                    $"--merge-output-format mp4 " +
-                    $"--ffmpeg-location \"{ffmpegPath}\" " +
-                    $"--force-overwrites " +
-                    $"--windows-filenames " +
-                    $"--postprocessor-args \"ffmpeg:-c:v copy -c:a aac\" " +
-                    $"-o \"{outputTemplate}\" " +
-                    $"\"{url}\"";*/
-            }
-
-            Debug.WriteLine("YT-DLP: " + ytDlpPath);
-            Debug.WriteLine("FFMPEG: " + ffmpegPath);
-            Debug.WriteLine("ARGS: " + arguments);
 
             ProcessStartInfo psi = new()
             {
@@ -147,12 +105,12 @@ namespace SocialMediaDownloader.Services
 
             await process.WaitForExitAsync();
 
-            if (!string.IsNullOrWhiteSpace(stderr))
+            /*if (!string.IsNullOrWhiteSpace(stderr))
             {
                 File.WriteAllText(
                     Path.Combine(destination, "yt-dlp-error.log"),
                     stderr);
-            }
+            }*/
         }
     }
 }
