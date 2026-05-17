@@ -37,8 +37,11 @@ namespace SocialMediaDownloader.Services
             if (string.IsNullOrWhiteSpace(safeName))
                 safeName = "download";
 
+            /*string outputTemplate =
+                Path.Combine(destination, $"{safeName}_%(height)sp.%(ext)s");*/
+
             string outputTemplate =
-                Path.Combine(destination, $"{safeName}_%(height)sp.%(ext)s");
+                Path.Combine(destination, $"{safeName}.%(ext)s");
 
             if (option.IsAudio)
             {
