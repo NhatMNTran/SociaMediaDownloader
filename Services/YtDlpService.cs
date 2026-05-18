@@ -12,14 +12,17 @@ namespace SocialMediaDownloader.Services
 {
     public class YtDlpService
     {
+        // Path to the yt-dlp executable, which is included in the Assets folder of the application
         private readonly string ytDlpPath =
             Path.Combine(
                 AppDomain.CurrentDomain.BaseDirectory,
                 "Assets",
                 "yt-dlp.exe");
 
+        // Method to get media information from a given URL using yt-dlp
         public async Task<MediaInfo> GetMediaInfo(string url)
         {
+            // Set up the process start info to run yt-dlp with the appropriate arguments
             ProcessStartInfo psi = new()
             {
                 FileName = ytDlpPath,
@@ -29,6 +32,7 @@ namespace SocialMediaDownloader.Services
                 CreateNoWindow = true
             };
 
+            // Start the process and read the output, which is expected to be in JSON format
             using Process process = Process.Start(psi);
 
             string json =
@@ -42,6 +46,7 @@ namespace SocialMediaDownloader.Services
 
             var allFormats = obj["formats"];
 
+            // Filter formats to get only video formats, group by height (1080, 720, 480, etc.)to avoid duplicates, and order by resolution
             var videoFormats = allFormats
                 .Where(f =>
                     f["vcodec"]?.ToString() != "none" &&
@@ -49,13 +54,15 @@ namespace SocialMediaDownloader.Services
                 .GroupBy(f => f["height"]?.ToString())
                 .Select(g => g.First())
                 .OrderByDescending(f => (int?)f["height"]);
+            
+            // For Twitter/X, we can only get the best video format, so we add a single option for that
             if (url.Contains("twitter.com") ||
                 url.Contains("x.com"))
             {
                 formats.Add(new DownloadOption
                 {
                     Label = "MP4 Video",
-                    FormatString = "best",
+                    FormatString = "b",
                     IsAudio = false
                 });
             }

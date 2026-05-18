@@ -9,6 +9,7 @@ namespace SocialMediaDownloader.Services
 {
     public class DownloadService
     {
+        //String paths for yt-dlp and ffmpeg, which are included in the Assets folder of the project
         private readonly string ytDlpPath =
             Path.Combine(
                 AppDomain.CurrentDomain.BaseDirectory,
@@ -20,6 +21,7 @@ namespace SocialMediaDownloader.Services
                 AppDomain.CurrentDomain.BaseDirectory,
                 "Assets");
 
+        // The main method for downloading media, which takes in the URL, destination folder, file name, and download options
         public async Task Download(
             string url,
             string destination,
@@ -27,11 +29,8 @@ namespace SocialMediaDownloader.Services
             DownloadOption option)
         {
             string arguments;
-            /*string outputTemplate =
-                Path.Combine(
-                    destination,
-                    "%(title)s_[%(height)sp].%(ext)s");*/
 
+            //String template for yt-dlp argument
             string safeName = fileName;
 
             if (string.IsNullOrWhiteSpace(safeName))
@@ -43,6 +42,8 @@ namespace SocialMediaDownloader.Services
             string outputTemplate =
                 Path.Combine(destination, $"{safeName}.%(ext)s");
 
+            //Full arguments for yt-dlp, varies based on type of media & platform
+            //If want to download files as their best quality video & audio, uncomment the -f options for each playform (remember to comment out the option.FormatString)
             if (option.IsAudio)
             {
                 arguments =
@@ -72,7 +73,7 @@ namespace SocialMediaDownloader.Services
             else if (url.Contains("twitter.com") ||
                      url.Contains("x.com"))
             {
-                // TWITTER / X
+                // TWITTER
                 arguments =
                     $"-f \"b\" " +
                     $"--merge-output-format mp4 " +
@@ -85,7 +86,7 @@ namespace SocialMediaDownloader.Services
             }
             else
             {
-                // DEFAULT (Instagram / TikTok / Others)
+                // Instagram / TikTok / Others
                 arguments =
                     $"-f \"{option.FormatString}\" " +
                     //$"-f \"bestvideo+bestaudio/best\" " +
@@ -97,6 +98,7 @@ namespace SocialMediaDownloader.Services
                     $"\"{url}\"";
             }
 
+            // Set up the process start info for yt-dlp, including the arguments and redirection of output
             ProcessStartInfo psi = new()
             {
                 FileName = ytDlpPath,
@@ -113,11 +115,13 @@ namespace SocialMediaDownloader.Services
 
             process.Start();
 
+            // Read the standard output and error streams asynchronously, and wait for the process to exit
             string stdout = await process.StandardOutput.ReadToEndAsync();
             string stderr = await process.StandardError.ReadToEndAsync();
 
             await process.WaitForExitAsync();
 
+            // If there is any error output, write it to a log file in the destination folder, UNCOMMENT THIS IF YOU WANT TO DEBUG ERRORS
             /*if (!string.IsNullOrWhiteSpace(stderr))
             {
                 File.WriteAllText(

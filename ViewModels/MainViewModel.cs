@@ -12,6 +12,7 @@ namespace SocialMediaDownloader.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        // Services for interacting with yt-dlp, handling downloads, and showing file dialogs
         private readonly YtDlpService ytDlpService = new();
         private readonly DownloadService downloadService = new();
         private readonly FileDialogService fileDialogService = new();
@@ -107,6 +108,7 @@ namespace SocialMediaDownloader.ViewModels
             }
         }
 
+        // Method to sanitize file names by replacing invalid characters with underscores
         private string SanitizeFileName(string name)
         {
             foreach (char c in Path.GetInvalidFileNameChars())
@@ -117,6 +119,7 @@ namespace SocialMediaDownloader.ViewModels
             return name;
         }
 
+        // Collection of available download options for the media, which is populated after checking the media info
         public ObservableCollection<DownloadOption> Formats { get; set; }
             = new();
 
@@ -194,6 +197,7 @@ namespace SocialMediaDownloader.ViewModels
             Status = "Download Complete";
         }
 
+        // Helper method to raise the PropertyChanged event when a property value changes, allowing the UI to update accordingly
         private void OnPropertyChanged(
             [CallerMemberName] string name = "")
         {

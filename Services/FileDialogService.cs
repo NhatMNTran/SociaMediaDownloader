@@ -2,6 +2,7 @@
 {
     public class FileDialogService
     {
+        // Method to open a folder browser dialog and return the selected path
         public string SelectFolder()
         {
             using FolderBrowserDialog dialog = new();
