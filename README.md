@@ -9,31 +9,53 @@ Windows desktop application built with C# and WPF that allows users to download 
 The app uses:
 
 -yt-dlp for media extraction
+
 -FFmpeg for media merging/conversion
+
 -WPF + MVVM architecture for the desktop UI
 
 ||  Features  ||
+
 Download videos from:
+
 -YouTube
+
 -Twitter / X
+
 -Instagram
+
 -TikTok
+
 Supported media types:
+
 -MP4 Video
+
 -MP3 Audio
+
 Automatically:
+
 -detects available formats
+
 -merges audio + video for YouTube downloads
+
 -preserves audio in MP4 downloads
+
 Additional functionality:
+
 -Custom file naming
+
 -Download destination selection
 
 Technologies Used:
+
 -C#
+
 -WPF (.NET 8)
+
 -MVVM Architecture
+
 -yt-dlp
+
 -FFmpeg
 
 Requirements:
@@ -57,5 +79,7 @@ This project is intended for educational and personal-use purposes only.
 Please respect:
 
 copyright laws
+
 platform Terms of Service
+
 content creator rights
