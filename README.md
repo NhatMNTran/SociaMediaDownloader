@@ -1,5 +1,7 @@
 # SociaMediaDownloader
 
+https://github.com/NhatMNTran/SociaMediaDownloader/blob/master/AppDemo.gif
+
 I made this app to download goofy cat memes from the internet so I can send then to my friends. Please don't use it for anything illegal or unethical!
 
 Windows desktop application built with C# and WPF that allows users to download media from popular social media platforms including YouTube, Twitter/X, Instagram, and TikTok.
