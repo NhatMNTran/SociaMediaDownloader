@@ -1,6 +1,6 @@
 # SociaMediaDownloader
 
-https://github.com/NhatMNTran/SociaMediaDownloader/blob/master/AppDemo.gif
+<img alt="AppDemo.gif" data-hpc="true" src="https://github.com/NhatMNTran/SociaMediaDownloader/blob/master/AppDemo.gif?raw=true" style="max-width: 100%;">
 
 I made this app to download goofy cat memes from the internet so I can send then to my friends. Please don't use it for anything illegal or unethical!
 
